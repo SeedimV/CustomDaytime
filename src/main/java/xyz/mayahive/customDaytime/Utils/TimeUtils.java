@@ -44,6 +44,8 @@ public class TimeUtils {
     public static boolean isEnoughPlayersSleeping(World world) {
         if (world == null) return false;
 
+        if (!CustomDaytime.getInstance().getConfig().getBoolean("enableNightFastForward", true)) {return false;}
+
         // Get player sleeping percentage game rule value
         Integer ruleValue = world.getGameRuleValue(GameRule.PLAYERS_SLEEPING_PERCENTAGE);
         if (ruleValue == null) ruleValue = 100; // fallback

@@ -1,6 +1,8 @@
 package xyz.mayahive.customDaytime.Tasks;
 
+import org.bukkit.Bukkit;
 import org.bukkit.GameRule;
+import xyz.mayahive.customDaytime.CustomDaytime;
 import xyz.mayahive.customDaytime.Utils.TimeUtils;
 import org.bukkit.World;
 
@@ -31,7 +33,7 @@ public class TimeTickTask implements Runnable {
 
         long currentWorldTime = world.getFullTime() %  TICKS_PER_DAY;
 
-        // Detect manual changes and sycn
+        // Detect manual changes and sync time
         if (Math.abs(currentWorldTime - customTime) > 1) {
             customTime = currentWorldTime;
             carry = 0.0;
@@ -40,7 +42,7 @@ public class TimeTickTask implements Runnable {
         if(cycleOn) {
             double increment;
 
-            if (TimeUtils.isNightFastForward(world)) {
+            if (TimeUtils.isNightFastForward(world) && CustomDaytime.getInstance().getConfig().getBoolean("enableNightFastForward", true)) {
                 increment = TimeUtils.getFastForwardIncrementPerTick();
             } else if (customTime < TICKS_PER_HALF_DAY) {
                 increment = TimeUtils.getDayIncrementPerTick();

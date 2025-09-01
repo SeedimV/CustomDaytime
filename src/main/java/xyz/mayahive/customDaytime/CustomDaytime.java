@@ -8,7 +8,6 @@ import xyz.mayahive.customDaytime.Updates.UpdateManager;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.mayahive.customDaytime.Utils.TimeUtils;
 
 public final class CustomDaytime extends JavaPlugin {
 

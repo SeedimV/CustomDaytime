@@ -22,6 +22,11 @@ dayLengthMinutes: 10.0
 # Default: 10.0
 nightLengthMinutes: 10.0
 
+# Enable or disable night fast forwarding when enough players sleep
+# False: use vanilla sleep-to-skip-night mechanic
+# Default: true
+enableNightFastForward: true
+
 # Length of night fast forwarding in seconds
 # Default: 5.0
 nightFastForwardSeconds: 5.0
