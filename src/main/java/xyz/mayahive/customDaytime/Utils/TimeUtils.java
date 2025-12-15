@@ -53,7 +53,13 @@ public class TimeUtils {
         double percentage = ruleValue / 100.0;
         int totalPlayers = world.getPlayers().size();
         int sleepingPlayers = (int) world.getPlayers().stream().filter(Player::isSleeping).count();
-        int required = (int) Math.ceil(totalPlayers * percentage);
+
+        int required;
+        if (percentage <= 0) {
+            required = 1;
+        } else {
+            required = (int) Math.ceil(totalPlayers * percentage);
+        }
 
         return sleepingPlayers >= required;
     }
