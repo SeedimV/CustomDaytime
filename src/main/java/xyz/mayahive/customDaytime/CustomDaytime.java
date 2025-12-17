@@ -12,8 +12,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.mayahive.customDaytime.Utils.TranslationManager;
 
-import java.util.Locale;
-
 public final class CustomDaytime extends JavaPlugin {
 
     private static CustomDaytime instance;
@@ -34,7 +32,7 @@ public final class CustomDaytime extends JavaPlugin {
         new UpdateManager(instance, "C7YliNqw");
 
         // Translations
-        TranslationManager translationManager = new TranslationManager(
+        new TranslationManager(
                 Key.key("customdaytime:translations"),
                 "xyz.mayahive.customDaytime.Localization"
         );
