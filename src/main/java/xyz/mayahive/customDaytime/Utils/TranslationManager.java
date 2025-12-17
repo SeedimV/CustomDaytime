@@ -5,7 +5,6 @@ import net.kyori.adventure.translation.GlobalTranslator;
 import net.kyori.adventure.translation.TranslationStore;
 import net.kyori.adventure.util.UTF8ResourceBundleControl;
 
-import java.net.URL;
 import java.text.MessageFormat;
 import java.util.*;
 
