@@ -1,5 +1,6 @@
 package xyz.mayahive.customDaytime;
 
+import net.kyori.adventure.key.Key;
 import xyz.mayahive.customDaytime.Listeners.BedEnterListener;
 import xyz.mayahive.customDaytime.Listeners.BedLeaveListener;
 import xyz.mayahive.customDaytime.Listeners.ConnectionListener;
@@ -9,6 +10,9 @@ import xyz.mayahive.customDaytime.Updates.UpdateManager;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import xyz.mayahive.customDaytime.Utils.TranslationManager;
+
+import java.util.Locale;
 
 public final class CustomDaytime extends JavaPlugin {
 
@@ -28,6 +32,12 @@ public final class CustomDaytime extends JavaPlugin {
 
         // Updates
         new UpdateManager(instance, "C7YliNqw");
+
+        // Translations
+        TranslationManager translationManager = new TranslationManager(
+                Key.key("customdaytime:translations"),
+                "xyz.mayahive.customDaytime.Localization"
+        );
 
         // Events
         Bukkit.getPluginManager().registerEvents(new TimeSkipListener(), instance); // Vanilla time skip prevention

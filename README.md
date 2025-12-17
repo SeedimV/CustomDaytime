@@ -29,13 +29,13 @@ Customize Minecraft's day/night cycle and experience smoother nights with this l
   # Length of night fast forwarding in seconds
   nightFastForwardSeconds: 5.0
 
-## ⚡ Usage
+## 🌐 Language Support
 
-- The plugin works **automatically** once installed.
+- The plugin supports over 40 different languages.
 
-- Sleeping mechanics are replaced with the fast-forward system. Players no longer instantly skip the night.
+- Most translations are generated using AI, so there may be major errors or inconsistencies in some languages.
 
-- Config values are flexible, so you can create ultra-short or ultra-long days and nights.
+- If you notice incorrect translations or want to suggest a new language, please use the GitHub Issues translation template to report problems.
 
 ## 📜 License
 This plugin is licensed under the [GNU General Public License v3.0](https://github.com/SeedimV/CustomDaytime/blob/master/LICENSE). You are free to use, modify, and distribute the plugin, but any derivative works must also be licensed under the same terms.
