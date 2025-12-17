@@ -1,5 +1,5 @@
 name: CustomDaytime
-version: '1.1.2'
+version: '1.2.0'
 main: xyz.mayahive.customDaytime.CustomDaytime
 api-version: '1.21'
 authors:

@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'xyz.mayahive'
-version = '1.1.3'
+version = '1.2.0'
 
 repositories {
     mavenCentral()
