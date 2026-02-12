@@ -21,7 +21,7 @@ public class TimeUtils {
         if (world != null) {
             fastForwardWorlds.add(world.getUID());
 
-            broadcastActionBar(world, "The night races toward dawn...");
+            broadcastActionBar(world, "fastforward.initiate", "The Argument");
         }
     }
 
@@ -94,9 +94,9 @@ public class TimeUtils {
         return (12000 / fastForwardGameTicks);
     }
 
-    public static void broadcastActionBar(World world, String message) {
+    public static void broadcastActionBar(World world, String key, String fallback) {
         for  (Player player : world.getPlayers()) {
-            player.sendActionBar(Component.text(message));
+            player.sendActionBar(Component.translatable(key, Component.text(fallback)));
         }
     }
 }

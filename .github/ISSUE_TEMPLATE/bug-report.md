@@ -7,28 +7,28 @@ assignees: ''
 
 ---
 
-### 📋 Description
+### Description
 A clear and concise description of what the bug is.
 
 > Example: When players use `/warp home`, they are teleported to the wrong coordinates.
 
 ---
 
-### ✅ Expected Behavior
+### Expected Behavior
 What did you expect to happen?
 
 > Example: Players should be teleported to their saved home location.
 
 ---
 
-### ❌ Actual Behavior
+### Actual Behavior
 What actually happened?
 
 > Example: Players are teleported to world spawn instead of their home.
 
 ---
 
-### 🔁 Steps to Reproduce
+### Steps to Reproduce
 Please provide a step-by-step guide to reproduce the issue.
 
 1. Set home using `/sethome`
@@ -37,7 +37,7 @@ Please provide a step-by-step guide to reproduce the issue.
 
 ---
 
-### 🖥️ Server Details
+### Server Details
 
 | Detail              | Value                          |
 |---------------------|--------------------------------|
@@ -49,7 +49,7 @@ Please provide a step-by-step guide to reproduce the issue.
 
 ---
 
-### 📄 Plugin Configuration
+### Plugin Configuration
 Paste relevant parts of your plugin config (if applicable). Use code blocks for readability.
 
 ```yaml
@@ -63,15 +63,15 @@ Paste relevant parts of your plugin config (if applicable). Use code blocks for 
    # Length of night fast forwarding in seconds
    nightFastForwardSeconds: 5.0
 ```
-## 📜 Console Errors
+## Console Errors
 If there are any errors in the console or logs, paste them here.
 
-## 📸 Screenshots / Videos
+## Screenshots / Videos
 If applicable, add screenshots or a link to a video showing the bug.
 
-## 🧠 Additional Context
+## Additional Context
 Add any other context about the problem here.
     Example: This only happens when teleporting between dimensions.
 
-## 🙏 Thank You!
+## Thank You!
 Thanks for taking the time to report this bug. We'll do our best to squash it quickly!
