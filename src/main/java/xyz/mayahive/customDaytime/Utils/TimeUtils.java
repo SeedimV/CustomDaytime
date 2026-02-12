@@ -1,9 +1,9 @@
 package xyz.mayahive.customDaytime.Utils;
 
+import org.bukkit.GameRules;
 import xyz.mayahive.customDaytime.CustomDaytime;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Bukkit;
-import org.bukkit.GameRule;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
@@ -47,7 +47,7 @@ public class TimeUtils {
         if (!CustomDaytime.getInstance().getConfig().getBoolean("enableNightFastForward", true)) {return false;}
 
         // Get player sleeping percentage game rule value
-        Integer ruleValue = world.getGameRuleValue(GameRule.PLAYERS_SLEEPING_PERCENTAGE);
+        Integer ruleValue = world.getGameRuleValue(GameRules.PLAYERS_SLEEPING_PERCENTAGE);
         if (ruleValue == null) ruleValue = 100; // fallback
 
         double percentage = ruleValue / 100.0;

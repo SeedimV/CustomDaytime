@@ -1,7 +1,6 @@
 package xyz.mayahive.customDaytime.Tasks;
 
-import org.bukkit.Bukkit;
-import org.bukkit.GameRule;
+import org.bukkit.GameRules;
 import xyz.mayahive.customDaytime.CustomDaytime;
 import xyz.mayahive.customDaytime.Utils.TimeUtils;
 import org.bukkit.World;
@@ -13,6 +12,7 @@ public class TimeTickTask implements Runnable {
     private double carry = 0.0;
     private long customTime = 0;
     private boolean initialized = false;
+    private long baseDay = -1;
 
     @Override
     public void run() {
@@ -22,14 +22,18 @@ public class TimeTickTask implements Runnable {
         if (world == null) return; // If world isn't loaded, return
 
         // Only proceed if daylight cycle is enabled
-        Boolean daylightCycle = world.getGameRuleValue(GameRule.DO_DAYLIGHT_CYCLE);
-        boolean cycleOn = daylightCycle != null && daylightCycle;
+        boolean cycleOn = Boolean.TRUE.equals(
+                world.getGameRuleValue(GameRules.ADVANCE_TIME)
+        );
+
 
         if (!initialized) {
-            // Initialize to current world time
-            customTime = world.getFullTime() % TICKS_PER_DAY;
+            long full = world.getFullTime();
+            baseDay = (full / TICKS_PER_DAY) * TICKS_PER_DAY;
+            customTime = full % TICKS_PER_DAY;
             initialized = true;
         }
+
 
         long currentWorldTime = world.getFullTime() %  TICKS_PER_DAY;
 
@@ -55,9 +59,18 @@ public class TimeTickTask implements Runnable {
             if (carry >= 1.0) {
                 long ticksToAdd = (long) carry;
                 carry -= ticksToAdd;
-                customTime = (customTime + ticksToAdd) % TICKS_PER_DAY;
+
+                long newTime = customTime + ticksToAdd;
+                if (newTime >= TICKS_PER_DAY) {
+                    baseDay += TICKS_PER_DAY;
+                    newTime %= TICKS_PER_DAY;
+                }
+
+                customTime = newTime;
             }
+
         }
-        world.setFullTime(customTime);
+        world.setFullTime(baseDay + customTime);
+
     }
 }
