@@ -36,6 +36,6 @@ public class PaperScheduler implements PlatformScheduler {
 
     @Override
     public void runTaskAsync(Runnable runnable) {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, runnable);
+        plugin.getServer().getAsyncScheduler().runNow(plugin, task -> runnable.run());
     }
 }
