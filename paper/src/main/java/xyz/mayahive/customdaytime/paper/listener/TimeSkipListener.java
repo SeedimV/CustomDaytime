@@ -13,7 +13,11 @@ public class TimeSkipListener implements Listener {
 
     @EventHandler
     public void onTimeSkipEvent(TimeSkipEvent event) {
+        String worldKey = event.getWorld().key().asString();
+        if (!configService.getRootKeys().contains(worldKey)) {return;}
+
         boolean accelerationEnabled = configService.getConfigValue(Boolean.class, true, event.getWorld().key().asString(), "accelerationEnabled");
+
         if (accelerationEnabled) {
             if (event.getSkipReason().equals(TimeSkipEvent.SkipReason.NIGHT_SKIP)) {
                 event.setCancelled(true);
