@@ -52,8 +52,7 @@ public class ConfigService {
 
     public <T> T getConfigValue(Class<T> type, T defaultValue, Object... path) {
         try {
-            ConfigurationNode configNode = rootNode.node(path);
-            return configNode.get(type);
+            return rootNode.node(path).get(type, defaultValue);
         } catch (SerializationException e) {
             logger.error("An error occurred while loading configuration value: " + e.getMessage());
             if (e.getCause() != null) {
