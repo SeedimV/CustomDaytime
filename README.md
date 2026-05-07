@@ -45,9 +45,3 @@ Customize Minecraft's day/night cycle and experience smoother nights with this l
 
 ## License
 This project is licensed under the [GNU General Public License v3.0](https://github.com/SeedimV/CustomDaytime/blob/master/LICENSE). You are free to use, modify, and distribute the project, but any derivative works must also be licensed under the same terms.
-
-## Author
-Created by **Seedim**
-- GitHub: https://github.com/SeedimV
-
-- Buy Me a Coffee: https://buymeacoffee.com/seedim
