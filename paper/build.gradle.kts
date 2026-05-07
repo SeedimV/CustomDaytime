@@ -26,11 +26,11 @@ tasks {
     // Configure the Minecraft version for our task.
     // This is the only required configuration besides applying the plugin.
     // Your plugin's jar (or shadowJar if present) will be used automatically.
-    minecraftVersion("1.21.11")
+    minecraftVersion("26.1.2")
   }
 }
 
-val targetJavaVersion = 21
+val targetJavaVersion = 25
 java {
     val javaVersion = JavaVersion.toVersion(targetJavaVersion)
     sourceCompatibility = javaVersion
@@ -75,7 +75,7 @@ paper {
     name = "CustomDaytime"
     author = "Seedim"
     main = "xyz.mayahive.customdaytime.paper.CustomDaytimePaper"
-    apiVersion = "1.21"
+    apiVersion = "26.1.2"
     foliaSupported = true
     contributors = listOf("PureLove")
 }

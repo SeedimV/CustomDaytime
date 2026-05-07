@@ -1,8 +1,8 @@
 [versions]
 # --- Platform Depencies ---
-paper = "1.21.11-R0.1-SNAPSHOT"
-run-paper = "2.3.1"
-plugin-yml = "0.8.0"
+paper = "26.1.2.build.+"
+run-paper = "3.0.2"
+plugin-yml = "0.9.0"
 spongegradle = "2.3.1-SNAPSHOT"
 spongevanilla = "0.2.2-SNAPSHOT"
 sponge-api = "18.0.0-SNAPSHOT"
