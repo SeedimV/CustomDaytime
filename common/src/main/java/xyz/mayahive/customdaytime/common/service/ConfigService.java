@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Collections;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,8 +31,8 @@ public class ConfigService {
                 .path(platform.configDirectory().resolve("config.conf"))
                 .build();
 
-        rootNode = loadConfig();
         saveDefaultConfig();
+        rootNode = loadConfig();
     }
 
     private CommentedConfigurationNode loadConfig() {
@@ -46,8 +45,9 @@ public class ConfigService {
             if (e.getCause() != null) {
                 logger.error(e.getCause().toString());
             }
+            logger.error("Falling back to empty configuration. Plugin features may not work correctly until the issue is resolved.");
+            return loader.createNode();
         }
-        return null;
     }
 
     public <T> T getConfigValue(Class<T> type, T defaultValue, Object... path) {
@@ -105,8 +105,6 @@ public class ConfigService {
     }
 
     public Set<String> getRootKeys() {
-        if (rootNode == null) {return Collections.emptySet();}
-
         return rootNode.childrenMap().keySet().stream()
                 .map(Object::toString)
                 .collect(Collectors.toSet());
