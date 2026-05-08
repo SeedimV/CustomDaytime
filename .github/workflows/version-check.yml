@@ -1,0 +1,73 @@
+name: Verify version
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  version-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Extract versions
+        id: versions
+        run: |
+          set -euo pipefail
+          extract() {
+            grep -E '^[[:space:]]*version[[:space:]]*=' "$1" | head -1 \
+              | sed -E 's/.*"([^"]+)".*/\1/'
+          }
+
+          PR_VERSION=$(extract build.gradle.kts)
+          if [ -z "$PR_VERSION" ]; then
+            echo "::error file=build.gradle.kts::Could not extract version from build.gradle.kts on PR branch."
+            exit 1
+          fi
+
+          BASE_FILE=$(git show "origin/${{ github.base_ref }}:build.gradle.kts")
+          BASE_VERSION=$(echo "$BASE_FILE" | grep -E '^[[:space:]]*version[[:space:]]*=' | head -1 \
+            | sed -E 's/.*"([^"]+)".*/\1/')
+          if [ -z "$BASE_VERSION" ]; then
+            echo "::error::Could not extract version from build.gradle.kts on origin/${{ github.base_ref }}."
+            exit 1
+          fi
+
+          echo "pr=$PR_VERSION"   >> "$GITHUB_OUTPUT"
+          echo "base=$BASE_VERSION" >> "$GITHUB_OUTPUT"
+          echo "PR:   $PR_VERSION"
+          echo "Base: $BASE_VERSION"
+
+      - name: Reject 'dev' in version
+        run: |
+          PR='${{ steps.versions.outputs.pr }}'
+          if echo "$PR" | grep -qi 'dev'; then
+            echo "::error file=build.gradle.kts::Version '$PR' contains 'dev' — must not be merged."
+            exit 1
+          fi
+
+      - name: Verify version is not lower
+        run: |
+          set -euo pipefail
+          PR='${{ steps.versions.outputs.pr }}'
+          BASE='${{ steps.versions.outputs.base }}'
+
+          if [ "$PR" = "$BASE" ]; then
+            echo "Version unchanged ($BASE) — OK."
+            exit 0
+          fi
+
+          LOWER=$(printf '%s\n%s\n' "$PR" "$BASE" | sort -V | head -1)
+          if [ "$LOWER" != "$BASE" ]; then
+            echo "::error file=build.gradle.kts::PR version ($PR) is lower than base version ($BASE). Version must only go up."
+            exit 1
+          fi
+
+          echo "PR version $PR > base version $BASE — OK."

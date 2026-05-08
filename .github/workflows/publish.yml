@@ -1,0 +1,56 @@
+name: Publish to Modrinth
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 25
+
+      - name: Determine previous release tag
+        id: prev_tag
+        run: |
+          PREV=$(git describe --tags --abbrev=0 "${{ github.event.release.tag_name }}^" 2>/dev/null || true)
+          echo "tag=$PREV" >> "$GITHUB_OUTPUT"
+
+      - name: Detect changed modules
+        if: steps.prev_tag.outputs.tag != ''
+        id: filter
+        uses: dorny/paths-filter@v3
+        with:
+          base: ${{ steps.prev_tag.outputs.tag }}
+          filters: |
+            paper:
+              - 'paper/**'
+              - 'common/**'
+              - 'api/**'
+              - 'gradle/libs.versions.toml'
+              - 'build.gradle.kts'
+              - 'settings.gradle.kts'
+
+      - name: Build all modules
+        run: ./gradlew build
+
+      - name: Publish Paper
+        if: steps.prev_tag.outputs.tag == '' || steps.filter.outputs.paper == 'true'
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          CHANGELOG: ${{ github.event.release.body }}
+        run: ./gradlew :paper:modrinth
