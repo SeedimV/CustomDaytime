@@ -45,9 +45,6 @@ jobs:
               - 'build.gradle.kts'
               - 'settings.gradle.kts'
 
-      - name: Build all modules
-        run: ./gradlew build
-
       - name: Publish Paper
         if: steps.prev_tag.outputs.tag == '' || steps.filter.outputs.paper == 'true'
         env:
