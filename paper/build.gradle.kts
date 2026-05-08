@@ -9,22 +9,17 @@ plugins {
     alias(libs.plugins.run.paper)
     alias(libs.plugins.shadow)
     alias(libs.plugins.plugin.yml)
-}
-
-repositories {
-    mavenCentral()
-    maven {
-        name = "papermc-repo"
-        url = uri("https://repo.papermc.io/repository/maven-public/")
-    }
+    alias(libs.plugins.minotaur)
 }
 
 dependencies {
     implementation(project(":common"))
 
     implementation(libs.bstats.bukkit)
+    implementation(libs.configurate.hocon)
 
-    compileOnly(libs.paper.api.get())
+    compileOnly(libs.paper.api)
+    compileOnly(libs.gson)
 }
 
 tasks {
@@ -70,11 +65,34 @@ tasks {
         dependsOn(shadowJar)
     }
 
+    jar {
+        enabled = false
+    }
+
     shadowJar {
+        archiveBaseName.set("CustomDaytimePaper")
+        archiveClassifier.set("")
         relocate("org.bstats", "xyz.mayahive.libs.bstats")
         relocate("org.spongepowered.configurate", "xyz.mayahive.customdaytime.lib.configurate")
         relocate("net.kyori.option", "xyz.mayahive.customdaytime.lib.kyori.option")
+        relocate("io.leangen.geantyref", "xyz.mayahive.customdaytime.lib.geantyref")
     }
+}
+
+modrinth {
+    token.set(System.getenv("MODRINTH_TOKEN"))
+    projectId.set("C7YliNqw")
+    versionNumber.set(version.toString())
+    versionType.set("release")
+    uploadFile.set(tasks.shadowJar)
+    gameVersions.addAll("26.1", "26.1.1", "26.1.2")
+    loaders.addAll("paper", "folia", "purpur")
+    syncBodyFrom = rootProject.file("README.md").readText()
+    changelog.set(System.getenv("CHANGELOG").takeUnless { it.isNullOrBlank() } ?: "No changelog provided")
+}
+
+tasks.modrinth {
+    dependsOn(tasks.modrinthSyncBody)
 }
 
 paper {

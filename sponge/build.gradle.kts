@@ -14,15 +14,11 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
-repositories {
-    mavenCentral()
-    maven("https://repo.spongepowered.org/maven/") {
-        name = "spongepowered-repo"
-    }
-}
-
 dependencies {
     api(project(":common"))
+
+    compileOnly(libs.configurate.hocon)
+    compileOnly(libs.gson)
 }
 
 sponge {
@@ -71,18 +67,8 @@ tasks.withType<AbstractArchiveTask>().configureEach {
     isPreserveFileTimestamps = false
 }
 
-tasks {
-    assemble {
-        dependsOn(shadowJar)
-    }
-
-    shadowJar {
-        dependencies {
-            exclude(dependency("io.leangen.geantyref:.*"))
-            exclude(dependency("net.kyori:.*"))
-            exclude(dependency("org.spongepowered:.*"))
-        }
-    }
+tasks.assemble {
+    dependsOn(tasks.shadowJar)
 }
 
 minecraft {
