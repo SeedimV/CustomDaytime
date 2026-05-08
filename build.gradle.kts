@@ -18,7 +18,7 @@
 subprojects {
 
     group = "xyz.mayahive.customdaytime"
-    version = "2.1.0"
+    version = "2.1.1"
 
     if (name != "api") {
         plugins.withId("java") {
